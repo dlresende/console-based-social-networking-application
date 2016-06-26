@@ -1,4 +1,8 @@
 class Messages() {
-  def add(message: Message) = throw new UnsupportedOperationException
 
+  var messages:Set[Message] = Set()
+
+  def all():scala.collection.immutable.Set[Message] = messages
+
+  def add(newMessage: Message) = messages += newMessage
 }
