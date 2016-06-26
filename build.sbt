@@ -1,4 +1,4 @@
-name := "codurance-exercice"
+name := "console-based-social-networking-application"
 
 version := "1.0"
 
