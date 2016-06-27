@@ -7,11 +7,20 @@ class MessagesSpec extends FunSuite with ShouldMatchers {
   val Diego = User("Diego")
   val Celine = User("Céline")
 
-  test("that messaged can be added") {
+  test("messages can be added") {
     val messages = new Messages()
     messages.add(Message(Diego, "hello"))
     messages.add(Message(Celine, "Hi"))
 
     messages.all() should be (Set(Message(Diego, "hello"), Message(Celine, "Hi")))
+  }
+
+  test("messages can be found dy user") {
+    val messages = new Messages()
+    messages.add(Message(Diego, "hello"))
+    messages.add(Message(Diego, "world"))
+    messages.add(Message(Celine, "Hi"))
+
+    messages.findByUser(Diego) should be (Set(Message(Diego, "hello"), Message(Diego, "world")))
   }
 }

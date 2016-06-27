@@ -13,13 +13,13 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter {
     users.deleteAll()
   }
 
-  test("that users should be created when they post a message for the first time") {
+  test("users should be created when they post a message for the first time") {
     interpreter.interpret("posting: Diego -> hello world ")
 
     users.all() should contain (Diego)
   }
 
-  test("that users can post messages") {
+  test("users can post messages") {
     users.add(Diego)
 
     interpreter.interpret("posting: Diego -> hello world ")

@@ -25,7 +25,7 @@ class UsersSpec extends FunSuite with ShouldMatchers{
     val users = new Users
     users.add(Diego)
 
-    val maybeUser: Option[User] = users.findBy("Diego")
+    val maybeUser: Option[User] = users.findByName("Diego")
 
     maybeUser should be (Some(Diego))
   }
