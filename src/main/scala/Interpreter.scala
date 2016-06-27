@@ -1,8 +1,7 @@
 class Interpreter(users: Users, messages: Messages) {
 
-  val Posting = """^posting:(.+)->(.+)$""".r
-  val Reading = """^reading:(.+)""".r
-  val Help    = """\s*help\s*""".r
+  val Posting = """^(.+)->(.+)$""".r
+  val Reading = """^(.+)""".r
 
   def interpret(action: String) = {
     action match {
