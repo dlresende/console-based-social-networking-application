@@ -1,3 +1,3 @@
-case class Message(user: User, message: String) {
+case class Message(user: User, content: String) {
 
 }

@@ -5,7 +5,7 @@ object Main extends App {
     val interpreter = new Interpreter(new Users(), new Messages())
 
     while (true) {
-      print(">>> ")
+      print(">> ")
 
       val action = readLine()
 

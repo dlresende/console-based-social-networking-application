@@ -17,7 +17,7 @@ class Interpreter(users: Users, messages: Messages) {
         maybeAUser match {
           case Some(user) => {
             val messagesFromUser: Set[Message] = messages.findByUser(maybeAUser.get)
-            messagesFromUser.foreach(message => println(message))
+            messagesFromUser.foreach(message => println(message.content))
           }
           case None => println("The user " + userName + " doesn't exist.")
         }
