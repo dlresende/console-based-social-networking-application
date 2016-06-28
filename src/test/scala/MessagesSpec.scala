@@ -42,7 +42,7 @@ class MessagesSpec extends FunSuite with ShouldMatchers {
 
     val allMessages = messages.findBy(Diego, Celine)
 
-    allMessages should be (mutable.Stack[Message](
+    allMessages should be (mutable.Stack(
       Message(Diego, "5", Now plusMinutes 5 ),
       Message(Celine, "4", Now plusMinutes 4),
       Message(Celine, "3", Now plusMinutes 3),
