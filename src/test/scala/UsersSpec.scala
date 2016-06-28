@@ -1,5 +1,5 @@
-import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{BeforeAndAfter, FunSuite}
 
 class UsersSpec extends FunSuite with ShouldMatchers with BeforeAndAfter {
   private val Diego = User("Diego")

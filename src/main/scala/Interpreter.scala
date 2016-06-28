@@ -1,7 +1,6 @@
-import org.joda.time.Period
-import org.joda.time.format.PeriodFormatterBuilder
 
-class Interpreter(users: Users, messages: Messages, clock: Clock) {
+
+class Interpreter(users: Users, messages: Messages, clock: Clock, display: Display) {
 
   val Posting = """^(.+)->(.+)$""".r
   val Follows = """^(.+)\s+follows\s+(.+)$""".r
@@ -22,11 +21,13 @@ class Interpreter(users: Users, messages: Messages, clock: Clock) {
 
       case Wall(userName) =>
         val user = findUserBy(userName)
-        messages.findBy((users followedBy user) + user).foreach(display)
+        val userWall = messages.findBy((users followedBy user) + user)
+        display.print(userWall)
 
       case Reading(userName) =>
         val user = findUserBy(userName)
-        messages.findBy(user).foreach(display)
+        val userMessages = messages.findBy(user)
+        display.print(userMessages)
 
       case _ =>
         throw new RuntimeException("Sorry, I could not understand your action.\n" +
@@ -51,18 +52,5 @@ class Interpreter(users: Users, messages: Messages, clock: Clock) {
     val user = User(userName.trim)
     users.add(user)
     user
-  }
-
-  private def display(message: Message) = {
-    val period = new Period(message.postTime, clock.now)
-
-    val formatter = new PeriodFormatterBuilder()
-      .appendPrefix("(")
-      .appendMinutes().appendSuffix(" minutes ago")
-      .appendSuffix(")")
-      .printZeroNever()
-      .toFormatter
-
-    println(message.content + " " + formatter.print(period))
   }
 }

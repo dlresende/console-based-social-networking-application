@@ -26,7 +26,7 @@ class MessagesSpec extends FunSuite with ShouldMatchers with BeforeAndAfter {
     allMessages should be (mutable.Stack(Message(Celine, "Hi", Now), Message(Diego, "hello", Now)))
   }
 
-  test("messages can be found dy user") {
+  test("messages can be found by user") {
     messages add Message(Diego, "hello", Now)
     messages add Message(Diego, "world", Now)
     messages add Message(Celine, "Hi", Now)
@@ -36,7 +36,7 @@ class MessagesSpec extends FunSuite with ShouldMatchers with BeforeAndAfter {
     messagesFromDiego should be (mutable.Stack(Message(Diego, "world", Now), Message(Diego, "hello", Now)))
   }
 
-  test("messages should be sorted by ascending creation time") {
+  test("most recent messages should be displayed first") {
     messages add Message(Diego, "1", Now plusMinutes 1)
     messages add Message(Diego, "2", Now plusMinutes 2)
     messages add Message(Celine, "3", Now plusMinutes 3)
