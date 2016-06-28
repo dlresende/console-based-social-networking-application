@@ -37,7 +37,7 @@ class Interpreter(users: Users, messages: Messages, clock: Clock) {
             println("Oups, the user " + userName + " doesn't exist.")
         }
 
-      case Reading(userName) => {
+      case Reading(userName) =>
         users.findByName(userName.trim) match {
           case Some(user) =>
             messages
@@ -46,8 +46,6 @@ class Interpreter(users: Users, messages: Messages, clock: Clock) {
           case None =>
             println("Oups, the user " + userName + " doesn't exist.")
         }
-
-      }
 
       case _ => println("Sorry, I could not understand your action.")
     }
@@ -60,12 +58,12 @@ class Interpreter(users: Users, messages: Messages, clock: Clock) {
   }
 
   private def createUser(userName: String): User = {
-    val user = User(name = userName.trim)
+    val user = User(userName.trim)
     users.add(user)
     user
   }
 
-  private def display(message: Message): Unit = {
+  private def display(message: Message) = {
     val period = new Period(message.creationTime, clock.now)
 
     val formatter = new PeriodFormatterBuilder()
