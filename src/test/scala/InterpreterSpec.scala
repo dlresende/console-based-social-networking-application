@@ -12,15 +12,17 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
 
   private val Now = DateTime.now
 
-  private val clock = mock[Clock]
-  private val users = new Users
-  private val messages = new Messages
-  private val interpreter = new Interpreter(users, messages, clock)
+  private var clock: Clock = _
+  private var users: Users = _
+  private var messages: Messages = _
+  private var interpreter: Interpreter = _
 
   before {
-    users.deleteAll()
-    messages.deleteAll()
+    clock = mock[Clock]
     when(clock.now).thenReturn(Now)
+    users = new Users
+    messages = new Messages
+    interpreter = new Interpreter(users, messages, clock)
   }
 
   test("users should be created when they post a message for the first time") {

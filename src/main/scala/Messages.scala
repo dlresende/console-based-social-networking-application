@@ -13,8 +13,6 @@ class Messages() {
   def all() = messages
 
   def add(newMessage: Message) = messages push newMessage
-
-  def deleteAll() = messages.clear()
 }
 
 case class Message(author: User, content: String, postTime:DateTime) {}

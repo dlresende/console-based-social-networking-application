@@ -14,11 +14,9 @@ class Users {
 
   def add(user: User) = users += ((user, nobody))
 
-  def deleteAll() = users.clear()
-
   def all() = users.keys
 
-  private def nobody: mutable.Set[User] = mutable.Set()
+  private def nobody = mutable.Set[User]()
 }
 
 case class User(name: String) {}
