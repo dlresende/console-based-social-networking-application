@@ -54,7 +54,7 @@ class Interpreter(users: Users, messages: Messages, clock: Clock) {
   }
 
   private def display(message: Message) = {
-    val period = new Period(message.creationTime, clock.now)
+    val period = new Period(message.postTime, clock.now)
 
     val formatter = new PeriodFormatterBuilder()
       .appendPrefix("(")

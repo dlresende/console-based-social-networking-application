@@ -17,4 +17,4 @@ class Messages() {
   def deleteAll() = messages.clear()
 }
 
-case class Message(author: User, content: String, creationTime:DateTime) {}
+case class Message(author: User, content: String, postTime:DateTime) {}
