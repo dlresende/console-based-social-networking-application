@@ -1,8 +1,8 @@
 import org.joda.time.DateTime
-import org.mockito.Mockito
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.mockito.Mockito.when
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
+import org.scalatest.{BeforeAndAfter, FunSuite}
 
 class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter with MockitoSugar {
 
@@ -12,15 +12,15 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
 
   val Now = DateTime.now
 
-  val users = new Users
-  val messages: Messages = new Messages()
   val clock = mock[Clock]
+  val users = new Users
+  val messages = new Messages()
   var interpreter = new Interpreter(users, messages, clock)
 
   before {
     users.deleteAll()
     messages.deleteAll()
-    Mockito.when(clock.now).thenReturn(Now)
+    when(clock.now).thenReturn(Now)
   }
 
   test("users should be created when they post a message for the first time") {
@@ -30,8 +30,6 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
   }
 
   test("users can post messages") {
-    users.add(Diego)
-
     interpreter.interpret("Diego -> hello world ")
 
     messages.all() should contain (Message(Diego, "hello world", Now))
@@ -44,6 +42,6 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
 
     interpreter.interpret("Diego follows Céline")
 
-    users.followers(Diego) should contain (Celine)
+    users.followedBy(Diego) should contain (Celine)
   }
 }

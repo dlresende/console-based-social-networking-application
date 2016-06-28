@@ -41,6 +41,6 @@ class UsersSpec extends FunSuite with ShouldMatchers{
     users.addFollower(Diego, Sandro)
     users.addFollower(Diego, Celine)
 
-    users.followers(Diego) should be (Set(Celine, Sandro))
+    users.followedBy(Diego) should be (Set(Celine, Sandro))
   }
 }

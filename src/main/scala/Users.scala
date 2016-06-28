@@ -2,11 +2,11 @@ import scala.collection.mutable
 
 class Users {
 
-  val users =
+  private val users =
     new mutable.HashMap[User, mutable.Set[User]]()
       with mutable.MultiMap[User, User]
 
-  def followers(user: User):Iterable[User] = users(user)
+  def followedBy(user: User):Set[User] = users(user).toSet
 
   def addFollower(user: User, follower: User) = users.addBinding(user, follower)
 

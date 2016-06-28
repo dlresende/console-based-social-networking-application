@@ -38,8 +38,8 @@ class Interpreter(users: Users, messages: Messages, clock: Clock) {
       case Wall(userName) => {
         users.findByName(userName) match {
           case Some(user) => {
-            val followers = users.followers(user)
-            messages.findBy(followers ++ Set(user)).foreach(message => display(message))
+            val followers = users.followedBy(user)
+            messages.findBy(followers + user).foreach(message => display(message))
           }
           case None => println("The user " + userName + " doesn't exist.")
         }
