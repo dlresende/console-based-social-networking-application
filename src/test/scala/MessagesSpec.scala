@@ -21,6 +21,6 @@ class MessagesSpec extends FunSuite with ShouldMatchers {
     messages.add(Message(Diego, "world"))
     messages.add(Message(Celine, "Hi"))
 
-    messages.findByUser(Diego) should be (Set(Message(Diego, "hello"), Message(Diego, "world")))
+    messages.findBy(Diego) should be (Set(Message(Diego, "hello"), Message(Diego, "world")))
   }
 }

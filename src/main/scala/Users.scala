@@ -1,18 +1,25 @@
+import scala.collection.mutable
+
 class Users {
 
-  var users:Set[User] = Set()
+  val users =
+    new mutable.HashMap[User, mutable.Set[User]]()
+      with mutable.MultiMap[User, User]
 
-  def findByName(userName: String): Option[User] = users.find(user => user.name.equals(userName))
+  def followers(user: User):Iterable[User] = users(user)
+
+  def addFollower(user: User, follower: User) = users.addBinding(user, follower)
+
+  def findByName(userName: String): Option[User] = users.keys.find(user => user.name == userName)
 
   def add(user: User): User = {
-    users += user
+    users.+=((user, mutable.Set()))
     user
   }
 
-  def deleteAll(): Any = {
-    users = Set()
-  }
+  def deleteAll() = users.clear()
 
-  def all(): scala.collection.immutable.Set[User] = users
-
+  def all() = users.keys
 }
+
+case class User(name: String) {}

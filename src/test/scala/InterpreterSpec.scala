@@ -4,6 +4,8 @@ import org.scalatest.matchers.ShouldMatchers
 class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter {
 
   val Diego: User = User("Diego")
+  val Celine: User = User("Céline")
+  val Sandro: User = User("Sandro")
 
   val users = new Users
   val messages: Messages = new Messages()
@@ -11,6 +13,7 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter {
 
   before {
     users.deleteAll()
+    messages.deleteAll()
   }
 
   test("users should be created when they post a message for the first time") {
@@ -25,5 +28,15 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter {
     interpreter.interpret("Diego -> hello world ")
 
     messages.all() should contain (Message(Diego, "hello world"))
+  }
+
+  test("users can follow someone else") {
+    users.add(Diego)
+    users.add(Celine)
+    users.add(Sandro)
+
+    interpreter.interpret("Diego follows Céline")
+
+    users.followers(Diego) should contain (Celine)
   }
 }
