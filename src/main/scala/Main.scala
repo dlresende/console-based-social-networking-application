@@ -7,7 +7,12 @@ object Main extends App {
     while (true) {
       print(">> ")
       val action = readLine()
-      interpreter.handle(action.trim)
+
+      try {
+        interpreter.handle(action.trim)
+      } catch {
+        case exception: RuntimeException => println(exception.getMessage)
+      }
     }
   }
 }

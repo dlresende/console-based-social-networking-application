@@ -44,4 +44,18 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
 
     users.followedBy(Diego) should contain (Celine)
   }
+
+  test("an exception should be thrown when a user that doesn't exist tries to follow another user") {
+    evaluating { interpreter.handle("NonExistingUser follows Diego") } should produce [RuntimeException]
+  }
+
+  test("an exception should be thrown when a user tries to follow another user that doesn't exist") {
+    users.add(Diego)
+
+    evaluating { interpreter.handle("Diego follows NonExistingUser") } should produce [RuntimeException]
+  }
+
+  test("an exception should be thrown when someone tries to display the wall of a user that doesn't exist") {
+    evaluating { interpreter.handle("NonExistingUser wall") } should produce [RuntimeException]
+  }
 }
