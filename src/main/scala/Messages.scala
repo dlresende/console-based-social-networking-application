@@ -4,15 +4,15 @@ import scala.collection.mutable
 
 class Messages() {
 
-  private val messages = mutable.LinkedHashSet[Message]()
+  private val messages = mutable.Stack[Message]()
 
   def findBy(users: User*) = messages.filter(message => users.contains(message.author))
 
-  def findBy(users: Set[User]):mutable.LinkedHashSet[Message] = findBy(users.toArray:_*)
+  def findBy(users: Set[User]):Iterable[Message] = findBy(users.toArray:_*)
 
-  def all() = messages.toSet
+  def all() = messages
 
-  def add(newMessage: Message) = messages += newMessage
+  def add(newMessage: Message) = messages push newMessage
 
   def deleteAll() = messages.clear()
 }

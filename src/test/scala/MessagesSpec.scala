@@ -18,7 +18,7 @@ class MessagesSpec extends FunSuite with ShouldMatchers {
 
     val allMessages = messages.all()
 
-    allMessages should be (Set(Message(Diego, "hello", Now), Message(Celine, "Hi", Now)))
+    allMessages should be (mutable.Stack(Message(Celine, "Hi", Now), Message(Diego, "hello", Now)))
   }
 
   test("messages can be found dy user") {
@@ -29,24 +29,24 @@ class MessagesSpec extends FunSuite with ShouldMatchers {
 
     val messagesFromDiego = messages.findBy(Diego)
 
-    messagesFromDiego should be (Set(Message(Diego, "hello", Now), Message(Diego, "world", Now)))
+    messagesFromDiego should be (mutable.Stack(Message(Diego, "world", Now), Message(Diego, "hello", Now)))
   }
 
   test("messages should be sorted by ascending creation time") {
     val messages = new Messages()
-    messages.add(Message(Diego, "1", Now.plusMinutes(1)))
-    messages.add(Message(Diego, "2", Now.plusMinutes(2)))
-    messages.add(Message(Celine, "3", Now.plusMinutes(3)))
-    messages.add(Message(Celine, "4", Now.plusMinutes(4)))
-    messages.add(Message(Diego, "5", Now.plusMinutes(5)))
+    messages.add(Message(Diego, "1", Now plusMinutes 1))
+    messages.add(Message(Diego, "2", Now plusMinutes 2))
+    messages.add(Message(Celine, "3", Now plusMinutes 3))
+    messages.add(Message(Celine, "4", Now plusMinutes 4))
+    messages.add(Message(Diego, "5", Now plusMinutes 5))
 
     val allMessages = messages.findBy(Diego, Celine)
 
-    allMessages should be (mutable.LinkedHashSet[Message](
-      Message(Diego, "1", Now.plusMinutes(1)),
-      Message(Diego, "2", Now.plusMinutes(2)),
-      Message(Celine, "3", Now.plusMinutes(3)),
-      Message(Celine, "4", Now.plusMinutes(4)),
-      Message(Diego, "5", Now.plusMinutes(5))))
+    allMessages should be (mutable.Stack[Message](
+      Message(Diego, "5", Now plusMinutes 5 ),
+      Message(Celine, "4", Now plusMinutes 4),
+      Message(Celine, "3", Now plusMinutes 3),
+      Message(Diego, "2", Now plusMinutes 2),
+      Message(Diego, "1", Now plusMinutes 1)))
   }
 }
