@@ -2,9 +2,9 @@ import org.scalatest.FunSuite
 import org.scalatest.matchers.ShouldMatchers
 
 class UsersSpec extends FunSuite with ShouldMatchers{
-  val Diego = User("Diego")
-  val Celine = User("Céline")
-  val Sandro = User("Sandro")
+  private val Diego = User("Diego")
+  private val Celine = User("Céline")
+  private val Sandro = User("Sandro")
 
   test("a user can be added") {
     val users = new Users

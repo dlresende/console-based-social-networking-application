@@ -6,20 +6,19 @@ class Users {
     new mutable.HashMap[User, mutable.Set[User]]()
       with mutable.MultiMap[User, User]
 
-  def followedBy(user: User):Set[User] = users(user).toSet
+  def followedBy(user: User) = users(user).toSet
 
   def addFollower(user: User, follower: User) = users.addBinding(user, follower)
 
-  def findByName(userName: String): Option[User] = users.keys.find(user => user.name == userName)
+  def findByName(userName: String) = users.keys.find(user => user.name == userName)
 
-  def add(user: User): User = {
-    users.+=((user, mutable.Set()))
-    user
-  }
+  def add(user: User) = users += ((user, nobody))
 
   def deleteAll() = users.clear()
 
   def all() = users.keys
+
+  private def nobody: mutable.Set[User] = mutable.Set()
 }
 
 case class User(name: String) {}

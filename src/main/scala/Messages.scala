@@ -6,7 +6,7 @@ class Messages() {
 
   private val messages:mutable.Set[Message] = mutable.Set()
 
-  def findBy(users: User*):Set[Message] = messages.filter(message => users.contains(message.author)).toSet
+  def findBy(users: User*) = messages.filter(message => users.contains(message.author)).toSet
 
   def findBy(users: Set[User]):Set[Message] = findBy(users.toArray:_*)
 

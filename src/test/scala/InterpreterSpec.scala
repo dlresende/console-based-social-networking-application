@@ -6,16 +6,16 @@ import org.scalatest.{BeforeAndAfter, FunSuite}
 
 class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter with MockitoSugar {
 
-  val Diego: User = User("Diego")
-  val Celine: User = User("Céline")
-  val Sandro: User = User("Sandro")
+  private val Diego: User = User("Diego")
+  private val Celine: User = User("Céline")
+  private val Sandro: User = User("Sandro")
 
-  val Now = DateTime.now
+  private val Now = DateTime.now
 
-  val clock = mock[Clock]
-  val users = new Users
-  val messages = new Messages()
-  var interpreter = new Interpreter(users, messages, clock)
+  private val clock = mock[Clock]
+  private val users = new Users
+  private val messages = new Messages()
+  private val interpreter = new Interpreter(users, messages, clock)
 
   before {
     users.deleteAll()
