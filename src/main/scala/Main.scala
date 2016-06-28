@@ -7,7 +7,7 @@ object Main extends App {
     while (true) {
       print(">> ")
       val action = readLine()
-      interpreter.handle(action)
+      interpreter.handle(action.trim)
     }
   }
 }
