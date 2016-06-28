@@ -8,7 +8,7 @@ class Interpreter(users: Users, messages: Messages, clock: Clock) {
   val Wall    = """^(.+)\s+wall$""".r
   val Reading = """^(.+)$""".r
 
-  def interpret(action: String) = {
+  def handle(action: String) = {
     action match {
       case Posting(userName, message) =>
         val user = findUserBy(userName)

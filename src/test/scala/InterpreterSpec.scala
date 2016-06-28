@@ -24,13 +24,13 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
   }
 
   test("users should be created when they post a message for the first time") {
-    interpreter.interpret("Diego -> hello world ")
+    interpreter.handle("Diego -> hello world ")
 
     users.all() should contain (Diego)
   }
 
   test("users can post messages") {
-    interpreter.interpret("Diego -> hello world ")
+    interpreter.handle("Diego -> hello world ")
 
     messages.all() should contain (Message(Diego, "hello world", Now))
   }
@@ -40,7 +40,7 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
     users.add(Celine)
     users.add(Sandro)
 
-    interpreter.interpret("Diego follows Céline")
+    interpreter.handle("Diego follows Céline")
 
     users.followedBy(Diego) should contain (Celine)
   }

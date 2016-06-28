@@ -6,10 +6,8 @@ object Main extends App {
 
     while (true) {
       print(">> ")
-
       val action = readLine()
-
-      if(action != null) interpreter.interpret(action)
+      interpreter.handle(action)
     }
   }
 }
