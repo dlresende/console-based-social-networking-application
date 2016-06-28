@@ -14,7 +14,7 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
 
   private val clock = mock[Clock]
   private val users = new Users
-  private val messages = new Messages()
+  private val messages = new Messages
   private val interpreter = new Interpreter(users, messages, clock)
 
   before {
