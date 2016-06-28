@@ -1,3 +1,5 @@
+import org.joda.time.DateTime
+
 class Messages() {
 
   var messages:Set[Message] = Set()
@@ -13,4 +15,4 @@ class Messages() {
   def deleteAll() = messages = Set()
 }
 
-case class Message(author: User, content: String) {}
+case class Message(author: User, content: String, creationTime:DateTime) {}
