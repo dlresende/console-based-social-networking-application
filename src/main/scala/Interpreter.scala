@@ -1,7 +1,8 @@
 class Interpreter(users: Users, messages: Messages) {
 
   val Posting = """^(.+)->(.+)$""".r
-  val Reading = """^(.+)""".r
+  val Wall = """^(.+)\s+wall$""".r
+  val Reading = """^(.+)$""".r
   val Follows = """^(.+)\s+follows\s+(.+)$""".r
 
   def interpret(action: String) = {
@@ -31,6 +32,16 @@ class Interpreter(users: Users, messages: Messages) {
           }
       }
 
+      case Wall(userName) => {
+        users.findByName(userName) match {
+          case Some(user) => {
+            val followers = users.followers(user)
+            messages.findBy(followers ++ Set(user)).foreach(message => println(message.content))
+          }
+          case None => println("The user " + userName + " doesn't exist.")
+        }
+      }
+
       case Reading(userName) => {
         val maybeAUser: Option[User] = users.findByName(userName.trim)
 
@@ -43,6 +54,7 @@ class Interpreter(users: Users, messages: Messages) {
         }
 
       }
+
 
       case _ => println("Sorry, I could not understand your action.")
     }
