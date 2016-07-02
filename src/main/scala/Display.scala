@@ -1,8 +1,7 @@
-import org.joda.time.DateTime._
 import org.joda.time.Period
 import org.joda.time.format.PeriodFormatterBuilder
 
-class Display() {
+class Display(clock: Clock) {
 
   def print(messages: Iterable[Message]): Unit = print(messages.toArray:_*)
 
@@ -11,15 +10,23 @@ class Display() {
   }
 
   private def doPrint(message: Message): Unit = {
-    val period = new Period(message.postTime, now)
+    println(toString(message))
+  }
+
+  def toString(message: Message) = {
+    val elapsedTime = new Period(message.postTime, clock.now)
 
     val formatter = new PeriodFormatterBuilder()
-      .appendPrefix(" (")
-      .appendMinutes().appendSuffix(" minutes ago")
+      .appendPrefix("(")
+      .appendSeconds().appendSuffix(" second ago", " seconds ago")
+      .appendSuffix(")")
+      .appendPrefix("(")
+      .appendMinutes().appendSuffix(" minute ago", " minutes ago")
       .appendSuffix(")")
       .printZeroNever()
       .toFormatter
 
-    println(message.content + formatter.print(period))
+    message.content + " " + formatter.print(elapsedTime)
   }
+
 }
