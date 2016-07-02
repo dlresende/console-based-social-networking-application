@@ -22,12 +22,12 @@ class Interpreter(users: Users, messages: Messages, clock: Clock, display: Displ
       case Wall(userName) =>
         val user = findUserBy(userName)
         val userWall = messages.findBy((users followedBy user) + user)
-        display.print(userWall)
+        display.wall(userWall)
 
       case Reading(userName) =>
         val user = findUserBy(userName)
         val userMessages = messages.findBy(user)
-        display.print(userMessages)
+        display.timeline(userMessages)
 
       case _ =>
         throw new RuntimeException("Sorry, I could not understand your action.\n" +

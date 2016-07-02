@@ -36,4 +36,12 @@ class DisplaySpec extends FunSuite with ShouldMatchers with BeforeAndAfter with 
     display.toString(_1_minute_ago) should be ("-1 (1 minute ago)")
     display.toString(_2_minutes_ago) should be ("-2 (2 minutes ago)")
   }
+
+  test("should display switch on/off when message's author is displayed") {
+    val withoutAuthor = Message(Diego, "without author", Now.minusMinutes(1))
+    val withAuthor = Message(Diego, "with author", Now.minusMinutes(2))
+
+    display.toString(withoutAuthor) should be ("without author (1 minute ago)")
+    display.toString(withAuthor, shouldPrintAuthor = true) should be ("Diego - with author (2 minutes ago)")
+  }
 }

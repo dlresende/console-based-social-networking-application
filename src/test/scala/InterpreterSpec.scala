@@ -77,7 +77,7 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
 
     interpreter.handle("Diego wall")
 
-    verify(display).print(immutable.Stack(Message(Celine, "bonjour", Now), Message(Diego, "world", Now), Message(Diego, "hello", Now)))
+    verify(display).wall(immutable.Stack(Message(Celine, "bonjour", Now), Message(Diego, "world", Now), Message(Diego, "hello", Now)))
   }
 
   test("should display user's messages when the user name is given") {
@@ -87,6 +87,6 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
 
     interpreter.handle("Diego")
 
-    verify(display).print(immutable.Stack(Message(Diego, "world", Now), Message(Diego, "hello", Now)))
+    verify(display).timeline(immutable.Stack(Message(Diego, "world", Now), Message(Diego, "hello", Now)))
   }
 }

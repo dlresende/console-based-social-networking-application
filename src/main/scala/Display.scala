@@ -3,17 +3,19 @@ import org.joda.time.format.PeriodFormatterBuilder
 
 class Display(clock: Clock) {
 
-  def print(messages: Iterable[Message]): Unit = print(messages.toArray:_*)
-
-  def print(messages: Message*) = {
-    messages.foreach(message => doPrint(message))
+  def timeline(messages: Iterable[Message]): Unit = {
+    messages.foreach(message => doPrint(message, shouldPrintAuthor = false))
   }
 
-  private def doPrint(message: Message): Unit = {
-    println(toString(message))
+  def wall(messages: Iterable[Message]) = {
+    messages.foreach(message => doPrint(message, true))
   }
 
-  def toString(message: Message) = {
+  private def doPrint(message: Message, shouldPrintAuthor:Boolean): Unit = {
+    println(toString(message, shouldPrintAuthor))
+  }
+
+  def toString(message: Message, shouldPrintAuthor: Boolean = false) = {
     val elapsedTime = new Period(message.postTime, clock.now)
 
     val formatter = new PeriodFormatterBuilder()
@@ -26,7 +28,12 @@ class Display(clock: Clock) {
       .printZeroNever()
       .toFormatter
 
-    message.content + " " + formatter.print(elapsedTime)
+    val contentAndElapsedTime = message.content + " " + formatter.print(elapsedTime)
+
+    if(shouldPrintAuthor)
+      message.author.name + " - " + contentAndElapsedTime
+    else
+      contentAndElapsedTime
   }
 
 }
