@@ -4,7 +4,8 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, FunSuite}
 
-import scala.collection.immutable
+import scala.Option.empty
+import scala.collection.{immutable, mutable}
 
 class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter with MockitoSugar {
 
@@ -24,31 +25,34 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
     clock = mock[Clock]
     when(clock.now).thenReturn(Now)
     display = mock[Display]
-    users = new Users
-    messages = new Messages
+    users = mock[Users]
+    messages = mock[Messages]
     interpreter = new Interpreter(users, messages, clock, display)
   }
 
   test("users should be created when they post a message for the first time") {
+    when(users.findByName("Diego")).thenReturn(empty)
+
     interpreter.handle("Diego -> hello world ")
 
-    users.all() should contain (Diego)
+    verify(users).add(Diego)
   }
 
   test("users can post messages") {
+    when(users.findByName("Diego")).thenReturn(Option(Diego))
+
     interpreter.handle("Diego -> hello world ")
 
-    messages.all() should contain (Message(Diego, "hello world", Now))
+    verify(messages).add(Message(Diego, "hello world", Now))
   }
 
   test("users can follow someone else") {
-    users add Diego
-    users add Celine
-    users add Sandro
+    when(users.findByName("Diego")).thenReturn(Option(Diego))
+    when(users.findByName("Céline")).thenReturn(Option(Celine))
 
     interpreter.handle("Diego follows Céline")
 
-    users.followedBy(Diego) should contain (Celine)
+    verify(users).addFollower(Diego, Celine)
   }
 
   test("an exception should be thrown when a user that doesn't exist tries to follow another user") {
@@ -56,7 +60,7 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
   }
 
   test("an exception should be thrown when a user tries to follow another user that doesn't exist") {
-    users add Diego
+    when(users.findByName("Diego")).thenReturn(Option(Diego))
 
     evaluating { interpreter.handle("Diego follows NonExistingUser") } should produce [RuntimeException]
   }
@@ -66,24 +70,18 @@ class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter w
   }
   
   test("user's wall should display his messages and messages from people he follows") {
-    users add Diego
-    messages add Message(Diego, "hello", Now)
-    messages add Message(Diego, "world", Now)
-    users add Celine
-    users addFollower (Diego, Celine)
-    messages add Message(Celine, "bonjour", Now)
-    users add Sandro
-    messages add Message(Sandro, "Hi", Now)
+    when(users.findByName("Diego")).thenReturn(Option(Diego))
+    when(users.followedBy(Diego)).thenReturn(Set(Celine))
+    when(messages.findBy(Set(Diego, Celine))).thenReturn(Set(Message(Diego, "hello", Now), Message(Diego, "world", Now), Message(Celine, "bonjour", Now)))
 
     interpreter.handle("Diego wall")
 
-    verify(display).wall(immutable.Stack(Message(Celine, "bonjour", Now), Message(Diego, "world", Now), Message(Diego, "hello", Now)))
+    verify(display).wall(Set(Message(Diego, "hello", Now), Message(Diego, "world", Now), Message(Celine, "bonjour", Now)))
   }
 
   test("should display user's messages when the user name is given") {
-    users add Diego
-    messages add Message(Diego, "hello", Now)
-    messages add Message(Diego, "world", Now)
+    when(users.findByName("Diego")).thenReturn(Option(Diego))
+    when(messages.findBy(Diego)).thenReturn(mutable.Stack(Message(Diego, "world", Now), Message(Diego, "hello", Now)))
 
     interpreter.handle("Diego")
 
