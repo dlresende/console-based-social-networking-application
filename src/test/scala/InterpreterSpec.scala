@@ -8,9 +8,9 @@ import scala.collection.immutable
 
 class InterpreterSpec extends FunSuite with ShouldMatchers with BeforeAndAfter with MockitoSugar {
 
-  private val Diego: User = User("Diego")
-  private val Celine: User = User("Céline")
-  private val Sandro: User = User("Sandro")
+  private val Diego = User("Diego")
+  private val Celine = User("Céline")
+  private val Sandro = User("Sandro")
 
   private val Now = DateTime.now
 
