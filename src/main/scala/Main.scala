@@ -5,7 +5,7 @@ object Main extends App {
     val interpreter = init
 
     while (true) {
-      print(">> ")
+      print("> ")
       val action = readLine()
 
       try {
