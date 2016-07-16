@@ -21,9 +21,8 @@ class MessagesSpec extends FunSuite with ShouldMatchers with BeforeAndAfter {
     messages add Message(Diego, "hello", Now)
     messages add Message(Celine, "Hi", Now)
 
-    val allMessages = messages.all()
-
-    allMessages should be (mutable.Stack(Message(Celine, "Hi", Now), Message(Diego, "hello", Now)))
+    messages.findBy(Diego) should contain (Message(Diego, "hello", Now))
+    messages.findBy(Celine) should contain (Message(Celine, "Hi", Now))
   }
 
   test("messages can be found by user") {

@@ -10,8 +10,6 @@ class Messages() {
 
   def findBy(users: Set[User]):Iterable[Message] = findBy(users.toArray:_*)
 
-  def all() = messages
-
   def add(newMessage: Message) = messages push newMessage
 }
 

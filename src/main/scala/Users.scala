@@ -14,8 +14,6 @@ class Users {
 
   def add(user: User) = users += ((user, nobody))
 
-  def all() = users.keys
-
   private def nobody = mutable.Set[User]()
 }
 

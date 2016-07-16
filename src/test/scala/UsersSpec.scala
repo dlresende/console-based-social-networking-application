@@ -15,7 +15,7 @@ class UsersSpec extends FunSuite with ShouldMatchers with BeforeAndAfter {
   test("a user can be added") {
     users add Diego
 
-    users.all should contain (Diego)
+    users.findByName("Diego") should be (Option(Diego))
   }
 
   test("can find user by name") {
