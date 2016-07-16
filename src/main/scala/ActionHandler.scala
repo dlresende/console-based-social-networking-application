@@ -1,11 +1,11 @@
-class Interpreter(eventHandler: EventHandler, clock: Clock) {
+class ActionHandler(eventHandler: EventHandler, clock: Clock) {
 
   val Post = """^(.+)->(.+)$""".r
   val Follow = """^(.+)\s+follows\s+(.+)$""".r
   val Wall = """^(.+)\s+wall$""".r
   val Read = """^(.+)$""".r
 
-  def interpret(action: String) = {
+  def handle(action: String) = {
     action match {
       case Post(user, message) =>
         eventHandler.handle(PostMessage(user.trim, message.trim, clock.now))

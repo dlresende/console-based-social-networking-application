@@ -9,19 +9,19 @@ object Main extends App {
       val action = readLine()
 
       try {
-        interpreter.interpret(action.trim)
+        interpreter.handle(action.trim)
       } catch {
         case exception: RuntimeException => println(exception.getMessage)
       }
     }
   }
 
-  private def init: Interpreter = {
+  private def init: ActionHandler = {
     val clock = new Clock
     val users = new Users
     val messages = new Messages
     val display = new Display(clock)
     val event = new EventHandler(messages, users, display)
-    new Interpreter(event, clock)
+    new ActionHandler(event, clock)
   }
 }
