@@ -1,33 +1,23 @@
+class Interpreter(eventHandler: EventHandler, clock: Clock) {
 
-
-class Interpreter(users: Users, messages: Messages, clock: Clock, display: Display) {
-
-  val Posting = """^(.+)->(.+)$""".r
-  val Follows = """^(.+)\s+follows\s+(.+)$""".r
+  val Post = """^(.+)->(.+)$""".r
+  val Follow = """^(.+)\s+follows\s+(.+)$""".r
   val Wall = """^(.+)\s+wall$""".r
-  val Reading = """^(.+)$""".r
+  val Read = """^(.+)$""".r
 
-  def handle(action: String) = {
+  def interpret(action: String) = {
     action match {
-      case Posting(userName, message) =>
-        val maybeAUser = users.findByName(userName.trim)
-        val user = maybeAUser.getOrElse(createUser(userName))
-        messages.add(Message(user, message.trim, clock.now))
+      case Post(user, message) =>
+        eventHandler.handle(PostMessage(user.trim, message.trim, clock.now))
 
-      case Follows(userName, userNameFromAnotherUser) =>
-        val user = findUserBy(userName)
-        val anotherUser = findUserBy(userNameFromAnotherUser)
-        users.addFollower(user, anotherUser)
+      case Follow(user, followee) =>
+        eventHandler.handle(AddFollower(user.trim, followee.trim))
 
-      case Wall(userName) =>
-        val user = findUserBy(userName)
-        val userWall = messages.findBy((users followedBy user) + user)
-        display.wall(userWall)
+      case Wall(user) =>
+        eventHandler.handle(DisplayWall(user.trim))
 
-      case Reading(userName) =>
-        val user = findUserBy(userName)
-        val userMessages = messages.findBy(user)
-        display.timeline(userMessages)
+      case Read(user) =>
+        eventHandler.handle(ReadMessages(user.trim))
 
       case _ =>
         throw new RuntimeException("Sorry, I could not understand your action.\n" +
@@ -37,20 +27,5 @@ class Interpreter(users: Users, messages: Messages, clock: Clock, display: Displ
           "\tfollowing: <user name> follows <another user>\n" +
           "\twall: <user name> wall")
     }
-  }
-
-  private def findUserBy(userName: String): User = {
-    users.findByName(userName.trim) match {
-      case Some(user) =>
-        user
-      case None =>
-        throw new RuntimeException("Oups, the user \"" + userName + "\" doesn't exist.")
-    }
-  }
-
-  private def createUser(userName: String): User = {
-    val user = User(userName.trim)
-    users.add(user)
-    user
   }
 }

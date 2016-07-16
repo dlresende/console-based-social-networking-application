@@ -35,5 +35,4 @@ class Display(clock: Clock) {
     else
       contentAndElapsedTime
   }
-
 }
