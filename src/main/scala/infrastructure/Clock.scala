@@ -1,3 +1,5 @@
+package infrastructure
+
 import org.joda.time.DateTime
 
 class Clock {

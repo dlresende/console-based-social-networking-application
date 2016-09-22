@@ -1,3 +1,6 @@
+package domain.message
+
+import domain.user.User
 import org.joda.time.DateTime.now
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfter, FunSuite}

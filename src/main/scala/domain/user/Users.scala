@@ -1,3 +1,5 @@
+package domain.user
+
 import scala.collection.mutable
 
 class Users {
@@ -16,5 +18,3 @@ class Users {
 
   private def nobody = mutable.Set[User]()
 }
-
-case class User(name: String) {}

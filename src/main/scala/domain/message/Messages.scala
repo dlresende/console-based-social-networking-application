@@ -1,4 +1,6 @@
-import org.joda.time.DateTime
+package domain.message
+
+import domain.user.User
 
 import scala.collection.mutable
 
@@ -12,5 +14,3 @@ class Messages() {
 
   def add(newMessage: Message) = messages push newMessage
 }
-
-case class Message(author: User, content: String, postTime:DateTime) {}

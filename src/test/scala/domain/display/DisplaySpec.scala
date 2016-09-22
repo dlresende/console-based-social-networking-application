@@ -1,8 +1,13 @@
+package domain.display
+
+import domain.message.Message
+import domain.user.User
+import infrastructure.Clock
 import org.joda.time.DateTime
 import org.mockito.Mockito._
-import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
+import org.scalatest.{BeforeAndAfter, FunSuite}
 
 class DisplaySpec extends FunSuite with ShouldMatchers with BeforeAndAfter with MockitoSugar {
 

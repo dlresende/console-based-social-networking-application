@@ -1,3 +1,5 @@
+package domain.user
+
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfter, FunSuite}
 

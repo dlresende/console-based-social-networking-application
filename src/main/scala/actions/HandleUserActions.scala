@@ -1,4 +1,12 @@
-class ActionHandler(eventHandler: EventHandler, clock: Clock) {
+package actions
+
+import domain.CommandGateway
+import domain.display.commands.DisplayWallCommand
+import domain.message.commands.{PostMessageCommand, ReadMessagesCommand}
+import domain.user.commands.AddFollowerCommand
+import infrastructure.Clock
+
+class HandleUserActions(commandGateway: CommandGateway, clock: Clock) {
 
   val Post = """^(.+)->(.+)$""".r
   val Follow = """^(.+)\s+follows\s+(.+)$""".r
@@ -8,16 +16,16 @@ class ActionHandler(eventHandler: EventHandler, clock: Clock) {
   def handle(action: String) = {
     action match {
       case Post(user, message) =>
-        eventHandler.handle(PostMessage(user.trim, message.trim, clock.now))
+        commandGateway.dispatch(PostMessageCommand(user.trim, message.trim, clock.now))
 
       case Follow(user, followee) =>
-        eventHandler.handle(AddFollower(user.trim, followee.trim))
+        commandGateway.dispatch(AddFollowerCommand(user.trim, followee.trim))
 
       case Wall(user) =>
-        eventHandler.handle(DisplayWall(user.trim))
+        commandGateway.dispatch(DisplayWallCommand(user.trim))
 
       case Read(user) =>
-        eventHandler.handle(ReadMessages(user.trim))
+        commandGateway.dispatch(ReadMessagesCommand(user.trim))
 
       case _ =>
         throw new RuntimeException("Sorry, I could not understand your action.\n" +

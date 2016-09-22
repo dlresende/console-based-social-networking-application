@@ -1,3 +1,7 @@
+package domain.display
+
+import domain.message.Message
+import infrastructure.Clock
 import org.joda.time.Period
 import org.joda.time.format.PeriodFormatterBuilder
 
