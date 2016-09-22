@@ -1,4 +1,4 @@
-name := "console-based-social-networking-application"
+name := "cwitter"
 
 version := "1.0"
 
