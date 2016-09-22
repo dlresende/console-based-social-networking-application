@@ -1,4 +1,4 @@
-object Main extends App {
+object Cwitter extends App {
 
   override def main(args: Array[String]) {
 
