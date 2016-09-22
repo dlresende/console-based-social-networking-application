@@ -9,6 +9,7 @@ import domain.user.Users
 
 class CommandGateway(messages: Messages, users: Users, display: Display) {
 
+  // Since there are only 4 commands (simple), Open-closed is not enforced
   val postMessageHandler = new PostMessageCommandHandler(messages, users)
   val addFollowerHandler = new AddFollowerCommandHandler(users)
   val displayWallHandler = new DisplayWallCommandHandler(users, messages, display)

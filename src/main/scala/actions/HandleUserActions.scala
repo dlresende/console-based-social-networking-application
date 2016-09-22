@@ -13,6 +13,7 @@ class HandleUserActions(commandGateway: CommandGateway, clock: Clock) {
   val Wall = """^(.+)\s+wall$""".r
   val Read = """^(.+)$""".r
 
+  // Since there are only 4 commands (simple), Open-closed is not enforced
   def handle(action: String) = {
     action match {
       case Post(user, message) =>
